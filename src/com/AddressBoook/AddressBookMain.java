@@ -17,12 +17,13 @@ public class AddressBookMain {
             System.out.println("1. Add Contact");
             System.out.println("2. Display All Contacts");
             System.out.println("3. Edit Contact");
-            System.out.println("4. Exit");
+            System.out.println("4. Delete Contact");
+            System.out.println("5. Exit");
 
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -34,7 +35,12 @@ public class AddressBookMain {
                 case 3:
                     addressBook.editContact();
                     break;
+
                 case 4:
+                    addressBook.deleteContact();
+                    break;
+
+                case 5:
                     exit = true;
                     System.out.println("Exiting Address Book Program.");
                     break;

@@ -83,4 +83,26 @@ public void editContact() {
     }
     System.out.println("Contact not found.");
     }
+
+
+    public void deleteContact() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the First Name of the contact to delete:");
+        String firstName = scanner.nextLine();
+        System.out.println("Enter the Last Name of the contact to delete:");
+        String lastName = scanner.nextLine();
+
+        for (int i = 0; i < contactList.size(); i++) {
+            Contact contact = contactList.get(i);
+            if (contact.getFirstName().equalsIgnoreCase(firstName) && contact.getLastName().equalsIgnoreCase(lastName)) {
+                contactList.remove(i);
+                System.out.println("Contact deleted successfully.");
+                return;
+            }
+        }
+        System.out.println("Contact not found.");
+    }
+
+
 }
