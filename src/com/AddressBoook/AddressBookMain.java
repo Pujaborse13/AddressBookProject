@@ -1,8 +1,6 @@
 package com.AddressBoook;
 import java.util.Scanner;
 
-
-
 class Contact {
     private String firstName;
     private String lastName;
@@ -77,7 +75,6 @@ class AddressBook {
 public class AddressBookMain {
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program");
-
 
         AddressBook addressBook = new AddressBook();
         addressBook.addContact();
