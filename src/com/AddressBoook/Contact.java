@@ -20,6 +20,23 @@ class Contact {
         this.email = email;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+
+    public void updateContactDetails(String address, String city, String state, String zip, String phoneNumber, String email) {
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
 
     public void displayContact() {
         System.out.println("Contact Details:");

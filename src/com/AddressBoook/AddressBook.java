@@ -8,10 +8,10 @@ class AddressBook {
     private List<Contact> contactList;
 
     public AddressBook() {
+
         this.contactList = new ArrayList<>();
     }
 
-    // Add a new contact to the address book
     public void addContact() {
         Scanner scanner = new Scanner(System.in);
 
@@ -49,5 +49,38 @@ class AddressBook {
                 System.out.println("--------------------------");
             }
         }
+}
+
+public void editContact() {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("Enter the First Name of the contact to edit:");
+    String firstName = scanner.nextLine();
+    System.out.println("Enter the Last Name of the contact to edit:");
+    String lastName = scanner.nextLine();
+
+    for (Contact contact : contactList) {
+        if (contact.getFirstName().equalsIgnoreCase(firstName) && contact.getLastName().equalsIgnoreCase(lastName)) {
+            System.out.println("Contact found. Enter new details:");
+
+            System.out.println("Enter New Address:");
+            String address = scanner.nextLine();
+            System.out.println("Enter New City:");
+            String city = scanner.nextLine();
+            System.out.println("Enter New State:");
+            String state = scanner.nextLine();
+            System.out.println("Enter New Zip:");
+            String zip = scanner.nextLine();
+            System.out.println("Enter New Phone Number:");
+            String phoneNumber = scanner.nextLine();
+            System.out.println("Enter New Email:");
+            String email = scanner.nextLine();
+
+            contact.updateContactDetails(address, city, state, zip, phoneNumber, email);
+            System.out.println("Contact updated successfully.");
+            return;
+        }
+    }
+    System.out.println("Contact not found.");
     }
 }
