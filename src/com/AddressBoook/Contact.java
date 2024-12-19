@@ -1,5 +1,10 @@
 package com.AddressBoook;
-class Contact {
+
+import java.util.ConcurrentModificationException;
+import java.util.Objects;
+
+class Contact
+{
     private String firstName;
     private String lastName;
     private String address;
@@ -28,6 +33,19 @@ class Contact {
         return lastName;
     }
 
+
+
+    public boolean equals(Object o) {
+        if(this == o)  return true;
+
+        if(o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return firstName.equalsIgnoreCase(contact.firstName) && lastName.equalsIgnoreCase(contact.lastName);
+
+    }
+        public int hashCode() {
+            return Objects.hash(firstName.toLowerCase(), lastName.toLowerCase());
+        }
 
     public void updateContactDetails(String address, String city, String state, String zip, String phoneNumber, String email) {
         this.address = address;

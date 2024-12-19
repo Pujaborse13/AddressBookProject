@@ -22,6 +22,17 @@ class AddressBook {
             System.out.print("Enter Last Name: ");
             String lastName = scanner.nextLine();
 
+
+            boolean isDuplicate = contactList.stream()
+                                            .anyMatch(contact -> contact.getFirstName().equalsIgnoreCase(firstName)
+                                                                      && contact.getLastName().equalsIgnoreCase(lastName));
+
+            if (isDuplicate) {
+                System.out.println("Contact with this name already exists. Cannot add duplicate.");
+                return;
+
+            }
+
             System.out.print("Enter Address: ");
             String address = scanner.nextLine();
 

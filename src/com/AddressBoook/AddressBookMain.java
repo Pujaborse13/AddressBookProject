@@ -1,7 +1,5 @@
 package com.AddressBoook;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddressBookMain {
     public static void main(String[] args) {
