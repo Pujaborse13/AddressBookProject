@@ -95,7 +95,7 @@ class AddressBook {
                     }
                 }
                 System.out.println("Contact not found.");
-                }
+    }
 
 
     public void deleteContact() {
