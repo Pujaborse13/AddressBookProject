@@ -11,7 +11,6 @@ public class AddressBookMain {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
 
-
         while (!exit) {
             System.out.println("\nMenu:");
             System.out.println("1. Add Contact");
@@ -23,6 +22,7 @@ public class AddressBookMain {
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
+
             scanner.nextLine();
 
             switch (choice) {
