@@ -1,6 +1,7 @@
 package com.AddressBoook;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 class AddressBook {
 
@@ -107,21 +108,38 @@ class AddressBook {
         System.out.print("Enter the name of the city or state: ");
         String location = scanner.nextLine().trim();
 
-        List<Contact> result = new ArrayList<>();
+       // List<Contact> result = new ArrayList<>();
 
-        if (choice == 1) {
-            // Fetch contacts from city map
-            result = cityMap.getOrDefault(location, new ArrayList<>());
+        List<Contact> result = contactList.stream()
+                .filter(contact -> (choice == 1 && contact.getCity().equalsIgnoreCase(location))
+                        || (choice == 2 && contact.getState().equalsIgnoreCase(location)))
+                .collect(Collectors.toList());
+
+      /*  if (choice == 1) {
+           result = cityMap.getOrDefault(location, new ArrayList<>());
         } else if (choice == 2) {
-            // Fetch contacts from state map
             result = stateMap.getOrDefault(location, new ArrayList<>());
-        }
+        }*/
 
         if (result.isEmpty()) {
             System.out.println("No contacts found in the specified city or state: " + location);
         } else {
             System.out.println("Contacts found in the specified city or state: " + location);
-            result.forEach(Contact::displayContact);
+            //result.forEach(Contact::displayContact);
+        }
+        displayCountByCityOrState(choice, location);
+    }
+
+    private void displayCountByCityOrState(int choice, String location) {
+        long count = contactList.stream()
+                .filter(contact -> (choice == 1 && contact.getCity().equalsIgnoreCase(location))
+                        || (choice == 2 && contact.getState().equalsIgnoreCase(location)))
+                .count();
+
+        if (choice == 1) {
+            System.out.println("Total contacts in city " + location + ": " + count);
+        } else if (choice == 2) {
+            System.out.println("Total contacts in state " + location + ": " + count);
         }
     }
 
