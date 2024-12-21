@@ -177,6 +177,15 @@ class AddressBook {
         System.out.println("Contact not found.");
     }
 
+    public void sortContactsByName() {
+        List<Contact> sortedContacts = contactList.stream()
+                .sorted(Comparator.comparing((Contact contact) -> contact.getFirstName().toLowerCase())
+                                    .thenComparing(contact -> contact.getLastName().toLowerCase()))
+                .collect(Collectors.toList());
+
+        System.out.println("\nContacts sorted by name:");
+        sortedContacts.forEach( System.out::println);
+    }
 
     public void deleteContact() {
         Scanner scanner = new Scanner(System.in);

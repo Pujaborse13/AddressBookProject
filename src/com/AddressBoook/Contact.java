@@ -13,6 +13,20 @@ class Contact {
     private String phoneNumber;
     private String email;
 
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     public Contact(String firstName, String lastName, String address, String city, String state, String zip, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,8 +37,6 @@ class Contact {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
-
-
 
     public String getFirstName() {
         return firstName;

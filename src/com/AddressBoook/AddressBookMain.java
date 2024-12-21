@@ -72,7 +72,8 @@ public class AddressBookMain {
             System.out.println("4. Delete Contact");
             System.out.println("5. Search Contact (City/State)");
             System.out.println("6. search by name");
-            System.out.println("7. Go Back");
+            System.out.println("7. Sort Contacts by Name");
+            System.out.println("8. Go Back");
             System.out.println("----------------------------------------------");
             System.out.print("Choose an option: ");
 
@@ -102,7 +103,12 @@ public class AddressBookMain {
                 case 6:
                     addressBookSystem.selectAddressBook();
                     break;
+
                 case 7:
+                    addressBook.sortContactsByName();
+                    break;
+
+                case 8:
                     System.out.println("Returning to Main menu");
                     return;
                 default:
