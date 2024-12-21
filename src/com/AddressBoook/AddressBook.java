@@ -1,19 +1,23 @@
 package com.AddressBoook;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.*;
 
 class AddressBook {
 
     private List<Contact> contactList;
     private AddressBookSystem addressBookSystem;
 
+    private Map<String, List<Contact>> cityMap;
+    private Map<String, List<Contact>> stateMap;
+
     public AddressBook(AddressBookSystem system) {
         this.contactList = new ArrayList<>();
         this.addressBookSystem = system;
+
+        this.cityMap = new HashMap<>();
+        this.stateMap = new HashMap<>();
     }
+
 
 
     public void addContact() {
@@ -30,7 +34,7 @@ class AddressBook {
 
 
             boolean isDuplicate = contactList.stream()
-                    .anyMatch(contact -> contact.getFirstName().equalsIgnoreCase(firstName)
+                            .anyMatch(contact -> contact.getFirstName().equalsIgnoreCase(firstName)
                             && contact.getLastName().equalsIgnoreCase(lastName));
 
             if (isDuplicate) {
@@ -63,6 +67,10 @@ class AddressBook {
             contactList.add(contact);
             addressBookSystem.addToGlobalList(contact);
 
+
+            cityMap.computeIfAbsent(city, k -> new ArrayList<>()).add(contact);
+            stateMap.computeIfAbsent(state, k -> new ArrayList<>()).add(contact);
+
             System.out.println("Contact added successfully.");
 
             System.out.print("Do you want to add another contact? [Y/N]: ");
@@ -73,12 +81,9 @@ class AddressBook {
         System.out.println("Returning to the main menu.");
     }
 
-    public List<Contact> getContactList() {
+    /*public List<Contact> getContactList() {
         return contactList;
-    }
-
-
-
+    }*/
 
     public void displayAllContacts() {
         if (contactList.isEmpty()) {
@@ -91,6 +96,35 @@ class AddressBook {
             }
         }
     }
+
+
+    public void searchPersonInCityOrState() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Search by: 1. City  2. State");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter the name of the city or state: ");
+        String location = scanner.nextLine().trim();
+
+        List<Contact> result = new ArrayList<>();
+
+        if (choice == 1) {
+            // Fetch contacts from city map
+            result = cityMap.getOrDefault(location, new ArrayList<>());
+        } else if (choice == 2) {
+            // Fetch contacts from state map
+            result = stateMap.getOrDefault(location, new ArrayList<>());
+        }
+
+        if (result.isEmpty()) {
+            System.out.println("No contacts found in the specified city or state: " + location);
+        } else {
+            System.out.println("Contacts found in the specified city or state: " + location);
+            result.forEach(Contact::displayContact);
+        }
+    }
+
 
     public void editContact() {
         Scanner scanner = new Scanner(System.in);
@@ -124,33 +158,6 @@ class AddressBook {
         }
         System.out.println("Contact not found.");
     }
-
-
-
-    public void searchPersonInCityOrState() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Search by: 1. City  2. State");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter the name of the city or state: ");
-        String location = scanner.nextLine().trim();
-
-        List<Contact> result = contactList.stream()
-                .filter(contact -> (choice == 1 && contact.getCity().equalsIgnoreCase(location))
-                        || (choice == 2 && contact.getState().equalsIgnoreCase(location)))
-                .collect(Collectors.toList());
-
-        if (result.isEmpty()) {
-            System.out.println("No contacts found in the specified city or state: " + location);
-        } else {
-            System.out.println("Contacts found in the specified city or state: " + location);
-            result.forEach(Contact::displayContact);
-        }
-    }
-
-
-
 
 
     public void deleteContact() {

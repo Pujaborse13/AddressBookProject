@@ -4,11 +4,17 @@ import java.util.*;
 public class AddressBookSystem {
 
     private Map<String, AddressBook> addressBookMap;
-    private List<Contact> contactList = new ArrayList<>();
+    private List<Contact> contactList;
+    private Map<String, List<Contact>> cityToPersonsMap;
+    private Map<String, List<Contact>> stateToPersonsMap;
+
+
 
     public AddressBookSystem() {
         this.addressBookMap = new HashMap<>();
         this.contactList = new ArrayList<>();
+        this.cityToPersonsMap = new HashMap<>();
+        this.stateToPersonsMap = new HashMap<>();
     }
 
 
@@ -17,8 +23,7 @@ public class AddressBookSystem {
         if (addressBookMap.containsKey(name)) {
             System.out.println("Address Book with this name already exists.");
         } else {
-            //addressBookMap.put(name, new AddressBook());
-            AddressBook newBook = new AddressBook(this); // Pass system reference
+            AddressBook newBook = new AddressBook(this);
             addressBookMap.put(name, newBook);
             System.out.println("Address Book added successfully: " + name);
         }
@@ -26,9 +31,13 @@ public class AddressBookSystem {
 
     public void addToGlobalList(Contact contact) {
         contactList.add(contact);
+        updateCityAndStateMaps(contact);
     }
 
-
+    private void updateCityAndStateMaps(Contact contact) {
+        cityToPersonsMap.computeIfAbsent(contact.getCity(), k -> new ArrayList<>()).add(contact);
+        stateToPersonsMap.computeIfAbsent(contact.getState(), k -> new ArrayList<>()).add(contact);
+    }
 
 
     public void selectAddressBook() {
@@ -72,6 +81,25 @@ public class AddressBookSystem {
 
 
 
+    private void displayPersonsByCity(String city) {
+        List<Contact> contacts = cityToPersonsMap.getOrDefault(city, new ArrayList<>());
+        if (contacts.isEmpty()) {
+            System.out.println("No persons found in city: " + city);
+        } else {
+            System.out.println("Persons in city " + city + ":");
+            contacts.forEach(Contact::displayContact);
+        }
+    }
+
+    private void displayPersonsByState(String state) {
+        List<Contact> contacts = stateToPersonsMap.getOrDefault(state, new ArrayList<>());
+        if (contacts.isEmpty()) {
+            System.out.println("No persons found in state: " + state);
+        } else {
+            System.out.println("Persons in state " + state + ":");
+            contacts.forEach(Contact::displayContact);
+        }
+    }
 
 
 }
