@@ -1,33 +1,34 @@
 package com.AddressBoook;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class AddressBookSystem {
+
     private Map<String, AddressBook> addressBookMap;
+    private List<Contact> contactList = new ArrayList<>();
 
     public AddressBookSystem() {
         this.addressBookMap = new HashMap<>();
+        this.contactList = new ArrayList<>();
     }
 
 
-    public void addAddressBook() {
-        Scanner scanner = new Scanner(System.in);
+    public void addAddressBook(String name) {
 
-        System.out.print("Enter The Name of New Address Book : ");
-        String addressBookName = scanner.next();
-
-        if (addressBookMap.containsKey(addressBookName)) {
-            System.out.println("Address Book with this Name Already Exist ");
+        if (addressBookMap.containsKey(name)) {
+            System.out.println("Address Book with this name already exists.");
         } else {
-            AddressBook newAddressBook = new AddressBook();
-            addressBookMap.put(addressBookName, newAddressBook);
-            System.out.println("Address Book Name : " + addressBookName + " Added Successfully");
-            System.out.println();
+            //addressBookMap.put(name, new AddressBook());
+            AddressBook newBook = new AddressBook(this); // Pass system reference
+            addressBookMap.put(name, newBook);
+            System.out.println("Address Book added successfully: " + name);
         }
     }
+
+    public void addToGlobalList(Contact contact) {
+        contactList.add(contact);
+    }
+
+
 
 
     public void selectAddressBook() {
@@ -40,46 +41,10 @@ public class AddressBookSystem {
 
         if (selectAddressBook == null) {
             System.out.println("Address Book Not Found with this Name " + addressBookName);
-        } else {
-            manageAddressBook(selectAddressBook);
-
         }
 
     }
 
-    public void manageAddressBook(AddressBook addressBook) {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("1. Add Contact");
-            System.out.println("2. Display All Contacts");
-            System.out.println("3. Edit Contact");
-            System.out.println("4. Delete Contact");
-            System.out.println("5. Go Back");
-            System.out.print("Choose an option: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1:
-                    addressBook.addContact();
-                    break;
-                case 2:
-                    addressBook.displayAllContacts();
-                    break;
-                case 3:
-                    addressBook.editContact();
-                    break;
-                case 4:
-                    addressBook.deleteContact();
-                    break;
-                case 5:
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
 
     public void displayAllAddressBooks() {
         if (addressBookMap.isEmpty()) {
@@ -103,7 +68,10 @@ public class AddressBookSystem {
             System.out.println("No Address Books available.");
         }
         return addressBookMap.keySet();
-    }
+       }
+
+
+
 
 
 }
